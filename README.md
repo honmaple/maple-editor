@@ -5,7 +5,8 @@ it's look like this
 
 ![editor](https://github.com/honmaple/maple-editor/blob/master/editor.png)
 
-**three file**
+### IF you want to use 
+just use **three file**  
 editor.html  
 editor.js  
 editor.css
