@@ -1,0 +1,74 @@
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{%- block title -%}{%- endblock -%}</title>
+        <script src="{{url_for('static', filename='style/js/jquery.min.js')}}"></script>
+        <script src="{{url_for('static', filename='style/editor.js')}}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='style/editor.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='style/css/bootstrap.min.css')}}">
+        <script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    var csrftoken = "{{ csrf_token() }}"
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                }
+            }
+        });
+});
+        </script>
+    </head>
+    <body class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <span style="float:right">
+                {{ form.choice.label(style="font-size:12px;") }}
+                {{ form.choice(class="input-sm",style="width:120px;padding:0px;") }}
+            </span>
+            <ul class="list-inline editor-title" style="margin:0">
+                <li> <a href="javascript:void(0)" id="editor-b" title="加粗">
+                        <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-i" title="倾斜">
+                        <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-a" title="链接">
+                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-bq" title="引用">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-c" title="代码">
+                        <span class="glyphicon glyphicon-console" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-h" title="标题">
+                        <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li> <a href="javascript:void(0)" id="editor-hr" title="分割线">
+                        <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
+                    </a>
+                </li> 
+                <li>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data" style="margin:0;">
+                        {{ fileform.photo(class="upload-file",onchange="loadFile(event)" ,title="添加图片") }}
+                        <a href="javascript:void(0)">
+                            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                        </a>
+                    </form>
+                </li> 
+            </ul>
+            {{ form.content(class="form-control",style="border-radius:0px;margin-top:0",rows="10",oninput="preview()") }}
+            <button class="btn btn-sm btn-info" id="ajax" type="button" style="float:right">提交问题</button>
+            <button class="btn btn-sm btn-info" id="uploadFile" type="button" style="float:right;margin-right:8px;">确认上传</button>
+            <div id="showPreview"></div>
+        </div>
+    </body>
+</html>
